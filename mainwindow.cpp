@@ -46,9 +46,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-//    readInp();
-//    writeVtu();
-    readVTU();
+    readInp();
+    writeVtu();
+//    readVTU();
 }
 
 MainWindow::~MainWindow()
@@ -58,7 +58,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::readInp()
 {
-    QString fileName = "D:/VTK/OO_test/VTKTest/source/disk.inp";    //inp文件所在路径
+    QString fileName = "D:/VTK/OO_test/VTKTest/source/model1.inp";    //inp文件所在路径
 
     if(fileName.isEmpty()) return;
 
@@ -85,7 +85,7 @@ void MainWindow::readInp()
     {
         if(strList1.at(i)=="*Node")
             Num_node=i+1;
-        if (strList1.at(i)=="*Element, type=DC3D8")
+        if (strList1.at(i)=="*Element, type=C3D8R")
             Num_element=i+1;
         if(strList1.at(i)=="*Nset, nset=Set-1, generate")
             Num_element_end=i;
@@ -231,7 +231,8 @@ void MainWindow::writeVtu()
        vtkSmartPointer<vtkActor>::New();
      actor->SetMapper(mapper.GetPointer());
 //     actor->GetProperty()->SetRepresentationToWireframe();
-     actor->GetProperty()->SetRepresentationToSurface();
+//     actor->GetProperty()->SetRepresentationToSurface();
+     actor->GetProperty()->EdgeVisibilityOn();//显示网格线
      vtkSmartPointer<vtkRenderer> ren =
        vtkSmartPointer<vtkRenderer>::New();
      ren->SetBackground(255, 248, 220);
@@ -268,10 +269,10 @@ void MainWindow::writeVtu()
 
     ui->Vtkwidget->SetRenderWindow(window);
     //将vtkpolyData类型的数据写入到一个vtk文件，保存位置是工程当前目录
-    vtkSmartPointer<vtkUnstructuredGridWriter>writer=vtkSmartPointer<vtkUnstructuredGridWriter>::New();
-    writer->SetFileName("disk.vtu");
-    writer->SetInputData(unstructruedGrid);
-    writer->Write();
+//    vtkSmartPointer<vtkUnstructuredGridWriter>writer=vtkSmartPointer<vtkUnstructuredGridWriter>::New();
+//    writer->SetFileName("disk.vtu");
+//    writer->SetInputData(unstructruedGrid);
+//    writer->Write();
 //    qDebug()<<"111";
 
 }
